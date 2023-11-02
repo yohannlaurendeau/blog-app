@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleRightSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="items">
+    <div>
+        <button mat-raised-button color="warn" *ngIf="!authService.isConnected()" [routerLink]="['connect/']">Connectez-vous</button>
+        <span *ngIf="authService.isConnected()">Bienvenue {{authService.currentUser!.username}}</span>
+      </div>
+    <div>
+        <button *ngIf="authService.isConnected()" mat-raised-button color="warn" (click)="deconnecter()">Se déconnecter</button>
+      </div>
+    </div>
+  </mat-toolbar-row>
+  </mat-toolbar>
+

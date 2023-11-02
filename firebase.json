@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "blog-app",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

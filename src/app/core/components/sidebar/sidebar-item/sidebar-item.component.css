@@ -1,0 +1,9 @@
+div{
+  display: flex;
+  margin: 10px;
+  gap: 5px;
+}
+span{
+  margin-top: auto;
+  margin-bottom: auto;
+}
