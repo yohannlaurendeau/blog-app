@@ -28,7 +28,7 @@
   <div *ngIf="posts?.length == 0"> Connectez-vous pour voir les posts</div>
   <div class="posts">
     <div *ngFor="let post of posts" class="col-md-5">
-      <app-feed-post  [post]="post" (eventClick)="handleEventEmitter($event)" ></app-feed-post>
+      <app-feed-post  [post]="post" ></app-feed-post>
     </div>
   </div>
 </div>

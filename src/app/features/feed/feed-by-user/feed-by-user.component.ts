@@ -21,7 +21,7 @@ export class FeedByUserComponent {
   body:any
 
 
-  constructor(private postService: PostService,private authService: AuthService,private userService: UserService,private router : Router){
+  constructor(private postService: PostService,private authService: AuthService){
 
   }
 
@@ -40,7 +40,7 @@ export class FeedByUserComponent {
       }
   ngOnInit(): void {
     console.log("page chargé");
-    this.getPostsbyUser();
+    //this.getPostsbyUser();
   }
 
   addPost(formValues: any): void{

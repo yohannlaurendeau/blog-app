@@ -12,7 +12,7 @@ const httpOptions = {
 @Injectable(
 )
 export class UserService{
-  private userUrl = 'https://blog-app-68f9b-default-rtdb.firebaseio.com/users.json';
+  private userUrl = 'https://jsonplaceholder.typicode.com/users';
   public users!: User[];
   constructor( private http: HttpClient ) {
 
