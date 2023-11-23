@@ -15,6 +15,9 @@ import { CommentService } from './shared/comment.service';
 import { CommonModule } from '@angular/common';
 import { ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
 import { CoreModule } from './core/core.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,18 +33,8 @@ import { CoreModule } from './core/core.module';
     MatSidenavModule,
     FormsModule,
     CommonModule,
-
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideAnalytics(() => getAnalytics()),
-    // provideAuth(() => getAuth()),
-    // provideDatabase(() => getDatabase()),
-    // provideFirestore(() => getFirestore()),
-    // provideFunctions(() => getFunctions()),
-    // provideMessaging(() => getMessaging()),
-    // providePerformance(() => getPerformance()),
-    // provideRemoteConfig(() => getRemoteConfig()),
-    // provideStorage(() => getStorage())
-
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [SidenavService,UserService,HttpClient,PostService,AuthService,CommentService, ScreenTrackingService,UserTrackingService],
   bootstrap: [AppComponent]

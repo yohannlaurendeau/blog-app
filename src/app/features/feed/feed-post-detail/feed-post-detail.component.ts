@@ -24,15 +24,18 @@ export class FeedPostDetailComponent implements OnInit,OnDestroy{
 
   }
   getCommentsByPost(){
-    this.sub = this.commentService.getComments().subscribe(res =>
+    this.sub = this.commentService.getAll().subscribe(res =>
       {
-        this.comments = Object.values(res).filter(x => x.postId == this.route.snapshot.params['id']);
+        this.comments = res.filter(x => x.postId == this.post.id);
       }
     )
   }
 
   ngOnInit(): void {
-    this.post = this.postService.getPost(+this.route.snapshot.params['id']);
+    this.postService.getPost(this.route.snapshot.params['id']).subscribe(res => {
+      this.post = res;
+      console.log("ce post précis ",res);
+    });
     this.getCommentsByPost();
   }
   ngOnDestroy(): void {
@@ -40,16 +43,13 @@ export class FeedPostDetailComponent implements OnInit,OnDestroy{
   }
   addComment(formValues: any ): void {
     this.testComm = {
-      postId: this.route.snapshot.params['id'],
-      id:20,
+      postId: this.post.id,
+      id:uuid(),
       name: formValues.name,
       email: formValues.email,
       body: formValues.body,
     }
-    this.sub2 = this.commentService.addComment(this.testComm).subscribe((response) =>{
-      this.comments.push(response)
-      console.log(response)
-    })
+    this.commentService.create(this.testComm);
   }
 
 

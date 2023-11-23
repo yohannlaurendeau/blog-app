@@ -2,9 +2,12 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IPost } from 'src/app/core/model/post.model';
+import Tutorial from 'src/app/core/model/tutorial.model';
 import { AuthService } from 'src/app/shared/auth.service';
 import { PostService } from 'src/app/shared/post.service';
-
+import { TutorialService } from 'src/app/shared/tutorial.service';
+import { UserService } from 'src/app/shared/user.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-feed',
@@ -14,42 +17,50 @@ import { PostService } from 'src/app/shared/post.service';
 export class FeedComponent implements OnInit{
     users!: any[];
     posts!: IPost[];
+    tutos!: Tutorial[];
     sub!: Subscription;
     sub2!:Subscription;
+    sub3!:Subscription;
     testPost!: IPost;
     title:any
     body:any
 
-    constructor(private postService: PostService,public authService: AuthService){
+    tutorial: Tutorial = {
+      key:"1",
+      title:"titre",
+      description:"description"
+
+    }
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    obs!: Observable<any>;
+    dataSource: MatTableDataSource<IPost> = new MatTableDataSource<IPost>(this.posts);
+    constructor(private postService: PostService,public authService: AuthService,private userService: UserService,private tutorialService: TutorialService){
 
     }
 
 
     getPostsbyUser(){
-        this.sub = this.postService.getPosts().subscribe(res =>
+      console.log("connecté?",this.authService.currentUser);
+        this.sub = this.postService.getAll().subscribe(res =>
           {
             this.posts = res;
          }
        )
         }
-
     ngOnInit(): void {
 
-      // this.getPostsbyUser();
-
+      this.getPostsbyUser();
     }
 
     addPost(formValues: any): void{
       this.testPost={
         userId: this.authService.currentUser!.id,
-        id: 20,
+        id: uuid(),
         title: formValues.title,
         body: formValues.body,
       }
-      this.sub2 = this.postService.addPost(this.testPost).subscribe((response) =>{
-        this.posts.push(response)
-        console.log(response)
-      })
+      this.postService.create(this.testPost);
     }
     ngOnDestroy(): void {
       if(this.authService.isConnected()){

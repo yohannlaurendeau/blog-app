@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
-import { v4 as uuid } from 'uuid';
 import { User } from '../../core/model/user.model';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-create-account',
@@ -13,6 +13,7 @@ import { User } from '../../core/model/user.model';
 export class CreateAccountComponent{
   username: any;
   email: any;
+  password: any;
   name: any;
   street: any;
   suite: any;
@@ -25,24 +26,13 @@ export class CreateAccountComponent{
 
   create(formValues: any): void{
     this.userTest={
-      id: 20,
-      username : formValues.userName,
+      id: uuid(),
+      username : formValues.username,
       email : formValues.password,
-      name : formValues.name,
-      address:{
-        street: formValues.street,
-        suite: formValues.suite,
-        city: formValues.city,
-        zipcode: formValues.zipcode,
-      }
+      password : formValues.password
     }
-    console.log('jappelle',formValues);
-    this.userService.addUser(this.userTest).subscribe(
-      (response ) => console.log(response)
-    );
-    this.userService.getUsers().subscribe(
-      (response ) => console.log("reponse users get",response)
-    );
+    this.userService.create(this.userTest);
+    this.authService.loginUser(this.userTest.username,this.userTest.password);
     this.router.navigate(['feed'])
   }
 }
