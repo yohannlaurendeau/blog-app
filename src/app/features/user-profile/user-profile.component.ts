@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit, OnChanges{
   userName: string = this.authService.currentUser!.username;
-  name: string = this.authService.currentUser!.name;
   email:string = this.authService.currentUser!.email;
+  password:string = this.authService.currentUser!.password;
   sub!: Subscription;
   userTest!: User;
   user!: User
@@ -27,9 +27,9 @@ export class UserProfileComponent implements OnInit, OnChanges{
     console.log(formValues);
     this.userTest={
       id : this.user!.id,
-      name : formValues.name,
       username : formValues.username,
-      email : formValues.em
+      email : formValues.em,
+      password: formValues.password
 
     }
     console.log('jappelle',formValues);

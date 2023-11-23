@@ -11,6 +11,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ConnectComponent {
   form: FormGroup = new FormGroup({
     userName: new FormControl(''),
+    password: new FormControl(''),
   });
   constructor(private authService: AuthService,private router : Router){
 
@@ -19,7 +20,7 @@ export class ConnectComponent {
   login(){
     if(this.form.valid){
       console.log(this.form.value.userName);
-      this.authService.loginUser(this.form.value.userName);
+      this.authService.loginUser(this.form.value.userName,this.form.value.password);
       this.router.navigate(['feed'])
     }
 
