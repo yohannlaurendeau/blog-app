@@ -32,9 +32,6 @@ export class FeedComponent implements OnInit{
 
     }
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    obs!: Observable<any>;
-    dataSource: MatTableDataSource<IPost> = new MatTableDataSource<IPost>(this.posts);
     constructor(private postService: PostService,public authService: AuthService,private userService: UserService,private tutorialService: TutorialService){
 
     }

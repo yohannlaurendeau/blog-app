@@ -7,12 +7,6 @@ import { IComment } from 'src/app/core/model/comment.model';
   styleUrls: ['./feed-post-detail-comment.component.css']
 })
 export class FeedPostDetailCommentComponent {
-    @Input() comment : IComment  = {
-      postId : -1,
-      name:"",
-      id:-1,
-      email:"",
-      body:""
-    } ;
+    @Input() comment!: IComment ;
 
 }
