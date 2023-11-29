@@ -7,6 +7,7 @@ import { FeedPostComponent } from './feed-post/feed-post.component';
 import { FeedComponent } from './feed.component';
 import { FeedRoutingModule } from './feed-routing.module';
 import { FeedByUserComponent } from './feed-by-user/feed-by-user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +22,8 @@ import { FeedByUserComponent } from './feed-by-user/feed-by-user.component';
   imports: [
     CommonModule,
     FeedRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class FeedModule { }

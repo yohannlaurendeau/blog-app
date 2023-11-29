@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { User } from '../../core/model/user.model';
 import { v4 as uuid } from 'uuid';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-create-account',
@@ -11,28 +12,32 @@ import { v4 as uuid } from 'uuid';
   styleUrls: ['./create-account.component.css']
 })
 export class CreateAccountComponent{
-  username: any;
-  email: any;
-  password: any;
+  username = new FormControl();
+  email = new FormControl();
+  password= new FormControl();
   name: any;
   street: any;
   suite: any;
   city: any;
   zipcode: any;
-  userTest!: User;
+  userCreation!: User;
   constructor(private authService: AuthService,private router : Router, private userService: UserService){
 
   }
 
-  create(formValues: any): void{
-    this.userTest={
+  create(): void{
+    this.userCreation={
       id: uuid(),
-      username : formValues.username,
-      email : formValues.password,
-      password : formValues.password
+      username : this.username.value,
+      email : this.email.value,
+      password : this.password.value,
     }
-    this.userService.create(this.userTest);
-    this.authService.loginUser(this.userTest.username,this.userTest.password);
+    console.log("this mail value");
+    console.log(this.email.value);
+    console.log("this user value");
+    console.log(this.userCreation);
+    this.userService.create(this.userCreation);
+    this.authService.loginUser(this.userCreation.username,this.userCreation.password);
     this.router.navigate(['feed'])
   }
 }

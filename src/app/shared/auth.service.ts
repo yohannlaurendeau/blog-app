@@ -32,6 +32,9 @@ export class AuthService{
   }
 
   isConnected(){
-    return !!this.currentUser;
+    if(this.currentUser.id.length > 0){
+      return true;
+    };
+    return false;
   }
 }

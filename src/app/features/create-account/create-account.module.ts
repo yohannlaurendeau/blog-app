@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateAccountRoutingModule } from './create-account-routing.module';
 import { CreateAccountComponent } from './create-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,8 @@ import { CreateAccountComponent } from './create-account.component';
   imports: [
     CommonModule,
     CreateAccountRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class CreateAccountModule { }

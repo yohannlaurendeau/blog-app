@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IPost } from 'src/app/core/model/post.model';
@@ -17,8 +18,8 @@ export class FeedByUserComponent {
   sub!: Subscription;
   sub2!:Subscription;
   testPost!: IPost;
-  title:any
-  body:any
+  title = new FormControl();
+  body = new FormControl();
 
 
   constructor(private postService: PostService,private authService: AuthService){
@@ -42,12 +43,12 @@ export class FeedByUserComponent {
     //this.getPostsbyUser();
   }
 
-  addPost(formValues: any): void{
+  addPost(): void{
     this.testPost={
       userId: this.authService.currentUser!.id,
       id: uuid(),
-      title: formValues.title,
-      body: formValues.body,
+      title: this.title.value,
+        body: this.body.value,
     }
     this.postService.create(this.testPost);
   }
