@@ -5,6 +5,7 @@ import { CommentService } from 'src/app/shared/comment.service';
 import { IComment } from 'src/app/core/model/comment.model';
 import { PostService } from 'src/app/shared/post.service';
 import { v4 as uuid } from 'uuid';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-feed-post-detail',
@@ -16,9 +17,10 @@ export class FeedPostDetailComponent implements OnInit,OnDestroy{
   comments!: IComment[];
   sub! : Subscription;
   testComm!: IComment;
-  name: any
-  email : any
-  body: any
+  name = new FormControl();
+  email = new FormControl();
+  body = new FormControl();
+
   sub2! : Subscription
   constructor(private postService : PostService,private route: ActivatedRoute,private commentService : CommentService){
 
@@ -41,13 +43,13 @@ export class FeedPostDetailComponent implements OnInit,OnDestroy{
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  addComment(formValues: any ): void {
+  addComment(): void {
     this.testComm = {
       postId: this.post.id,
       id:uuid(),
-      name: formValues.name,
-      email: formValues.email,
-      body: formValues.body,
+      name: this.name.value,
+      email: this.email.value,
+      body: this.body.value,
     }
     this.commentService.create(this.testComm);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IPost } from 'src/app/core/model/post.model';
 import Tutorial from 'src/app/core/model/tutorial.model';
@@ -22,8 +22,8 @@ export class FeedComponent implements OnInit{
     sub2!:Subscription;
     sub3!:Subscription;
     testPost!: IPost;
-    title:any
-    body:any
+    title = new FormControl();
+    body = new FormControl();
 
     tutorial: Tutorial = {
       key:"1",
@@ -38,7 +38,7 @@ export class FeedComponent implements OnInit{
 
 
     getPostsbyUser(){
-      console.log("connecté?",this.authService.currentUser);
+      console.log("connecté?",this.authService.isConnected);
         this.sub = this.postService.getAll().subscribe(res =>
           {
             this.posts = res;
@@ -50,12 +50,12 @@ export class FeedComponent implements OnInit{
       this.getPostsbyUser();
     }
 
-    addPost(formValues: any): void{
+    addPost(): void{
       this.testPost={
-        userId: this.authService.currentUser!.id,
+        userId: this.authService.currentUser!.id!,
         id: uuid(),
-        title: formValues.title,
-        body: formValues.body,
+        title: this.title.value,
+        body: this.body.value,
       }
       this.postService.create(this.testPost);
     }
