@@ -1,5 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IPost } from 'src/app/core/model/post.model';
 import Tutorial from 'src/app/core/model/tutorial.model';
@@ -52,7 +51,7 @@ export class FeedComponent implements OnInit{
 
     addPost(formValues: any): void{
       this.testPost={
-        userId: this.authService.currentUser!.id,
+        userId: this.authService.currentUser!.id!,
         id: uuid(),
         title: formValues.title,
         body: formValues.body,

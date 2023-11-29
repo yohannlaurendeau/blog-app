@@ -44,7 +44,7 @@ export class FeedByUserComponent {
 
   addPost(formValues: any): void{
     this.testPost={
-      userId: this.authService.currentUser!.id,
+      userId: this.authService.currentUser!.id!,
       id: uuid(),
       title: formValues.title,
       body: formValues.body,
