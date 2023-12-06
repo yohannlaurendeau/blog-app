@@ -8,7 +8,12 @@ import { User } from "../core/model/user.model";
 
 @Injectable()
 export class AuthService{
-  currentUser!: User | null;
+  currentUser: User = {
+    id:"",
+    username:"",
+    email:"",
+    password:""
+  };
   lastid!: number;
   sub! : Subscription;
   users! : User[];
@@ -28,7 +33,12 @@ export class AuthService{
     )
   }
   disconnect(){
-    this.currentUser = null;
+    this.currentUser =  {
+      id:"",
+      username:"",
+      email:"",
+      password:""
+    }
   }
 
   isConnected(){
