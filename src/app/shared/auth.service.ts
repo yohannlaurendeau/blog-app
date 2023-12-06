@@ -5,6 +5,8 @@ import { UserService } from "./user.service";
 import { DatabaseReference } from "@angular/fire/database";
 import { user } from "@angular/fire/auth";
 import { User } from "../core/model/user.model";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthService{
@@ -18,8 +20,50 @@ export class AuthService{
   sub! : Subscription;
   users! : User[];
   private userUrl = 'https://jsonplaceholder.typicode.com/users';
-  constructor( private http: HttpClient,private userService : UserService ) {
+  constructor( private http: HttpClient,private userService : UserService,private afAuth: AngularFireAuth,private router : Router) {
 
+  }
+
+  signUp(user:User){
+    this.afAuth.createUserWithEmailAndPassword(user.email,user.password).then(() => {
+      console.log("reussite");
+      this.userService.create(user);
+      this.router.navigate(['feed']);
+    })
+    .catch((error) => {
+      //Error occured
+    })
+  }
+
+  login(email:string,password:string){
+    this.afAuth.signInWithEmailAndPassword(email,password).then(() => {
+      console.log("connexion réussi");
+      this.userService.getAll().subscribe(res =>
+        {
+          this.users = res.filter(x => x.email === email && x.password == password);
+          console.log(this.users);
+          this.currentUser = this.users[0];
+
+        }
+      )
+    })
+    .catch((error) => {
+      //Error occured
+    })
+  }
+
+  logOut(){
+    this.afAuth.signOut().then(() => {
+      this.currentUser =  {
+        id:"",
+        username:"",
+        email:"",
+        password:""
+      }
+    })
+    .catch((error) => {
+
+    })
   }
 
   loginUser(userName: string, password: string){

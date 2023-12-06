@@ -18,6 +18,7 @@ import { CoreModule } from './core/core.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     CommonModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     AngularFireDatabaseModule
   ],
   providers: [SidenavService,UserService,HttpClient,PostService,AuthService,CommentService, ScreenTrackingService,UserTrackingService],

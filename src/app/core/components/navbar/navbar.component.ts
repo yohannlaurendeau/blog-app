@@ -14,7 +14,7 @@ export class NavbarComponent {
     this.sidenav.toggle();
  }
   deconnecter(){
-    this.authService.disconnect();
+    this.authService.logOut();
     this.router.navigate(['connect']);
   }
 }
