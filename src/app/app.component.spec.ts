@@ -1,27 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+describe('my first test', () => {
+  let sut: { a?: any; };
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
-  }));
+  beforeEach(() => {
+    sut = {}
+  })
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it('should be true if true', () => {
+    //arrange
+    sut.a = false;
 
-  it(`should have as title 'blog-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('blog-app');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('blog-app app is running!');
-  });
-});
+    //assert
+    sut.a = true
+    //act
+    expect(sut.a).toBe(true);
+  })
+})

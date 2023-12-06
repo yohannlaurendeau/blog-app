@@ -2,29 +2,43 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../core/model/user.model';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 
-const httpOptions = {
-  headers: new HttpHeaders ({
-    'Content-Type': 'application/json; charset=UTF-8',
-  })
-}
 
-@Injectable(
-)
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class UserService{
-  private userUrl = 'https://blog-app-68f9b-default-rtdb.firebaseio.com/users.json';
-  public users!: User[];
-  constructor( private http: HttpClient ) {
 
-  }
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.userUrl);
+  private dbPath = '/user';
+
+  userRef: AngularFireList<User>;
+
+  constructor(private db: AngularFireDatabase) {
+    this.userRef = db.list(this.dbPath);
   }
 
-  createUser(user: User){
-    return this.http.post(this.userUrl,user).subscribe((response) => console.log(response));
+  getAll(): Observable<User[]> {
+    return this.userRef.valueChanges();
   }
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.userUrl, user, httpOptions)
+
+  create(user: User) {
+    return this.userRef.push(user);
   }
+
+  update(key: string, value: any): Promise<void> {
+    return this.userRef.update(key, value);
+  }
+
+  delete(key: string): Promise<void> {
+    return this.userRef.remove(key);
+  }
+
+  deleteAll(): Promise<void> {
+    return this.userRef.remove();
+  }
+
 }
+

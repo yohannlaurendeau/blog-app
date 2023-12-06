@@ -8,7 +8,12 @@ import { User } from "../core/model/user.model";
 
 @Injectable()
 export class AuthService{
-  currentUser!: User | null;
+  currentUser: User = {
+    id:"",
+    username:"",
+    email:"",
+    password:""
+  };
   lastid!: number;
   sub! : Subscription;
   users! : User[];
@@ -17,24 +22,29 @@ export class AuthService{
 
   }
 
-  loginUser(userName: string){
-    this.sub = this.userService.getUsers().subscribe(res =>
+  loginUser(userName: string, password: string){
+    this.sub = this.userService.getAll().subscribe(res =>
       {
-        console.log(res);
-        this.users = res.filter(x => x.username === userName);
-        console.log("users",this.users);
+        this.users = res.filter(x => x.username === userName && x.password == password);
+        console.log(this.users);
         this.currentUser = this.users[0];
-        console.log("current user",this.currentUser);
 
       }
     )
   }
   disconnect(){
-    this.currentUser = null;
+    this.currentUser =  {
+      id:"",
+      username:"",
+      email:"",
+      password:""
+    }
   }
 
   isConnected(){
-    console.log("currentUser",this.currentUser);
-    return !!this.currentUser;
+    if(this.currentUser.id.length > 0){
+      return true;
+    };
+    return false;
   }
 }

@@ -5,6 +5,7 @@ import { CommentService } from 'src/app/shared/comment.service';
 import { IComment } from 'src/app/core/model/comment.model';
 import { PostService } from 'src/app/shared/post.service';
 import { v4 as uuid } from 'uuid';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-feed-post-detail',
@@ -16,40 +17,41 @@ export class FeedPostDetailComponent implements OnInit,OnDestroy{
   comments!: IComment[];
   sub! : Subscription;
   testComm!: IComment;
-  name: any
-  email : any
-  body: any
+  name = new FormControl();
+  email = new FormControl();
+  body = new FormControl();
+
   sub2! : Subscription
   constructor(private postService : PostService,private route: ActivatedRoute,private commentService : CommentService){
 
   }
   getCommentsByPost(){
-    this.sub = this.commentService.getComments().subscribe(res =>
+    this.sub = this.commentService.getAll().subscribe(res =>
       {
-        this.comments = Object.values(res).filter(x => x.postId == this.route.snapshot.params['id']);
+        this.comments = res.filter(x => x.postId == this.post.id);
       }
     )
   }
 
   ngOnInit(): void {
-    this.post = this.postService.getPost(+this.route.snapshot.params['id']);
+    this.postService.getPost(this.route.snapshot.params['id']).subscribe(res => {
+      this.post = res;
+      console.log("ce post précis ",res);
+    });
     this.getCommentsByPost();
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  addComment(formValues: any ): void {
+  addComment(): void {
     this.testComm = {
-      postId: this.route.snapshot.params['id'],
-      id:20,
-      name: formValues.name,
-      email: formValues.email,
-      body: formValues.body,
+      postId: this.post.id,
+      id:uuid(),
+      name: this.name.value,
+      email: this.email.value,
+      body: this.body.value,
     }
-    this.sub2 = this.commentService.addComment(this.testComm).subscribe((response) =>{
-      this.comments.push(response)
-      console.log(response)
-    })
+    this.commentService.create(this.testComm);
   }
 
 

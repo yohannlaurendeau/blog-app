@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/user.service';
-import { v4 as uuid } from 'uuid';
 import { User } from '../../core/model/user.model';
+import { v4 as uuid } from 'uuid';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-create-account',
@@ -11,38 +12,32 @@ import { User } from '../../core/model/user.model';
   styleUrls: ['./create-account.component.css']
 })
 export class CreateAccountComponent{
-  username: any;
-  email: any;
+  username = new FormControl();
+  email = new FormControl();
+  password= new FormControl();
   name: any;
   street: any;
   suite: any;
   city: any;
   zipcode: any;
-  userTest!: User;
+  userCreation!: User;
   constructor(private authService: AuthService,private router : Router, private userService: UserService){
 
   }
 
-  create(formValues: any): void{
-    this.userTest={
-      id: 20,
-      username : formValues.userName,
-      email : formValues.password,
-      name : formValues.name,
-      address:{
-        street: formValues.street,
-        suite: formValues.suite,
-        city: formValues.city,
-        zipcode: formValues.zipcode,
-      }
+  create(): void{
+    this.userCreation={
+      id: uuid(),
+      username : this.username.value,
+      email : this.email.value,
+      password : this.password.value,
     }
-    console.log('jappelle',formValues);
-    this.userService.addUser(this.userTest).subscribe(
-      (response ) => console.log(response)
-    );
-    this.userService.getUsers().subscribe(
-      (response ) => console.log("reponse users get",response)
-    );
+    console.log("this mail value");
+    console.log(this.email.value);
+    console.log("this user value");
+    console.log(this.userCreation);
+    this.userService.create(this.userCreation);
+    this.authService.loginUser(this.userCreation.username,this.userCreation.password);
     this.router.navigate(['feed'])
   }
 }

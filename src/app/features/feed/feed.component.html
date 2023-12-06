@@ -11,15 +11,15 @@
         <mat-card-title>Ajouter un Post</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form #loginForm="ngForm" (ngSubmit)="addPost(loginForm.value)">
+        <form >
           <div class="form-group" >
-            <input (ngModel)="title" name="title" id="title" type="text" class="form-control" placeholder="Title..." />
+            <input [formControl]="title" class="form-control" placeholder="Title..." />
           </div>
           <div class="form-group" >
-            <input (ngModel)="body" name="body" id="body" type="body" class="form-control"placeholder="body..." />
+            <input  [formControl]="body" class="form-control" placeholder="body..." />
           </div>
 
-          <button type="submit" class="btn btn-primary">Add Post</button>
+          <button type="submit" class="btn btn-primary" (click)="addPost()">Add Post</button>
         </form>
       </mat-card-content>
     </mat-card>
@@ -28,7 +28,7 @@
   <div *ngIf="posts?.length == 0"> Connectez-vous pour voir les posts</div>
   <div class="posts">
     <div *ngFor="let post of posts" class="col-md-5">
-      <app-feed-post  [post]="post" (eventClick)="handleEventEmitter($event)" ></app-feed-post>
+      <app-feed-post  [post]="post" ></app-feed-post>
     </div>
   </div>
 </div>

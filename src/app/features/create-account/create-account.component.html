@@ -2,37 +2,22 @@
 <h1>Create User</h1>
 <hr>
 <div class="col-md-4">
-  <form #loginForm="ngForm" (ngSubmit)="create(loginForm.value)">
+  <form >
     <div class="form-group" >
       <label for="username">User Name:</label>
-      <input (ngModel)="username" name="username" id="username" type="text" class="form-control" placeholder="User Name..." />
+      <input [formControl]="username" class="form-control" placeholder="User Name..." />
     </div>
     <div class="form-group" >
       <label for="email">email:</label>
-      <input (ngModel)="email" name="email" id="email" type="email" class="form-control"placeholder="email..." />
+      <input [formControl]="email" class="form-control" placeholder="email..." />
     </div>
     <div class="form-group" >
-      <label for="name">name:</label>
-      <input (ngModel)="name" name="name" id="name" type="text" class="form-control"placeholder="name..." />
-    </div>
-    <div class="form-group" >
-      <label for="street">street:</label>
-      <input (ngModel)="street" name="street" id="street" type="text" class="form-control"placeholder="street..." />
-    </div>
-    <div class="form-group" >
-      <label for="suite">suite:</label>
-      <input (ngModel)="suite" name="suite" id="suite" type="text" class="form-control"placeholder="suite..." />
-    </div>
-    <div class="form-group" >
-      <label for="city">city:</label>
-      <input (ngModel)="city" name="city" id="city" type="text" class="form-control"placeholder="city..." />
-    </div>
-    <div class="form-group" >
-      <label for="zipcode">zipcode:</label>
-      <input (ngModel)="zipcode" name="zipcode" id="zipcode" type="text" class="form-control"placeholder="zipcode..." />
+      <label for="password">password:</label>
+      <input [formControl]="password" class="form-control"  placeholder="password..." />
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+
+    <button type="submit" class="btn btn-primary"(click)="create()">Créer</button>
     <button type="button" class="btn btn-default">Cancel</button>
   </form>
 </div>

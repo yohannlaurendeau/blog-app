@@ -2,29 +2,46 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { IPost } from "../core/model/post.model";
+import { AngularFireDatabase, AngularFireList } from "@angular/fire/compat/database";
 
-const httpOptions = {
-  headers: new HttpHeaders ({
-    'Content-Type': 'application/json; charset=UTF-8',
-  })
-}
+@Injectable({
+  providedIn: 'root'
+})
 
-@Injectable()
 export class PostService{
-  private postUrl = 'https://jsonplaceholder.typicode.com/posts';
-  public testPost! : IPost;
-  constructor( private http: HttpClient ) {
 
+  private dbPath = '/post';
+
+  postRef: AngularFireList<IPost>;
+
+  constructor(private db: AngularFireDatabase) {
+    this.postRef = db.list(this.dbPath);
   }
-  getPosts(): Observable<IPost[]> {
-    console.log(this.http.get<IPost[]>(this.postUrl));
-    return this.http.get<IPost[]>(this.postUrl);
+
+  getAll(): Observable<IPost[]> {
+    return this.postRef.valueChanges();
   }
-  getPost(id: number): Observable<IPost> {
-    return this.http.get<IPost>(`${this.postUrl}/${id}`)
+
+  getPostsKey():  Observable<any> {
+    return this.db.object('post').valueChanges();
   }
-  addPost(post: IPost): Observable<IPost> {
-    return of(post);
+  getPost(id:string): Observable<any>{
+    return this.db.object('post/' + id).valueChanges();
+  }
+  create(user: IPost) {
+    return this.postRef.push(user);
+  }
+
+  update(key: string, value: any): Promise<void> {
+    return this.postRef.update(key, value);
+  }
+
+  delete(key: string): Promise<void> {
+    return this.postRef.remove(key);
+  }
+
+  deleteAll(): Promise<void> {
+    return this.postRef.remove();
   }
 
 }
