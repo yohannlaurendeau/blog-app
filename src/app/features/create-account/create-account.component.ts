@@ -21,7 +21,7 @@ export class CreateAccountComponent{
   city: any;
   zipcode: any;
   userCreation!: User;
-  constructor(private authService: AuthService,private router : Router, private userService: UserService){
+  constructor(private authService: AuthService){
 
   }
 
@@ -36,8 +36,7 @@ export class CreateAccountComponent{
     console.log(this.email.value);
     console.log("this user value");
     console.log(this.userCreation);
-    this.userService.create(this.userCreation);
-    this.authService.loginUser(this.userCreation.username,this.userCreation.password);
-    this.router.navigate(['feed'])
+    this.authService.signUp(this.userCreation);
+
   }
 }
