@@ -16,6 +16,7 @@ export class AuthService{
     email:"",
     password:""
   };
+  userboolean: boolean = false;
   lastid!: number;
   sub! : Subscription;
   users! : User[];
@@ -90,5 +91,21 @@ export class AuthService{
       return true;
     };
     return false;
+  }
+
+  isConnectedV3(){
+    return this.userboolean;
+  }
+  isConnectedV2() {
+    this.afAuth.onAuthStateChanged((user) => {
+      if (user) {
+        // User logged in already or has just logged in.
+        console.log(user.uid);
+        this.userboolean = true;
+      } else {
+          console.log("pas connecté");
+          this.userboolean = false;
+      }
+    })
   }
 }

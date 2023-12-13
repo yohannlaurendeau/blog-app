@@ -38,7 +38,7 @@ export class FeedComponent implements OnInit{
 
 
     getPostsbyUser(){
-      console.log("connecté?",this.authService.isConnected);
+
         this.sub = this.postService.getAll().subscribe(res =>
           {
             this.posts = res;
@@ -46,7 +46,7 @@ export class FeedComponent implements OnInit{
        )
         }
     ngOnInit(): void {
-
+      this.authService.isConnectedV2();
       this.getPostsbyUser();
     }
 

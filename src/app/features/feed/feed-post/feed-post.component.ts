@@ -31,10 +31,7 @@ export class FeedPostComponent implements OnInit{
   testgetRouter(){
     this.postService.getPostsKey().subscribe(details => {
       Object.entries(details).forEach((element :any) => {
-        console.log("post",this.post.id);
-        console.log("element",element[1].id);
         if(this.post.id == element[1].id){
-          console.log('hello');
           this.key = element[0];
         }
       });

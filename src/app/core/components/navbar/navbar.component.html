@@ -5,14 +5,14 @@
     </button>
     <div class="items">
     <div>
-        <button mat-raised-button color="warn" *ngIf="!authService.isConnected()" [routerLink]="['connect/']">Connectez-vous</button>
-        <span *ngIf="authService.isConnected()">Bienvenue {{authService.currentUser!.username}}</span>
+        <button mat-raised-button color="warn" *ngIf="!authService.isConnectedV3()" [routerLink]="['connect/']">Connectez-vous</button>
+        <span *ngIf="authService.isConnectedV3()">Bienvenue {{authService.currentUser!.username}}</span>
     </div>
     <div>
       <button mat-raised-button color="warn" [routerLink]="['create-account/']">Creer un utilisateur</button>
   </div>
     <div>
-        <button *ngIf="authService.isConnected()" mat-raised-button color="warn" (click)="deconnecter()">Se déconnecter</button>
+        <button *ngIf="authService.isConnectedV3()" mat-raised-button color="warn" (click)="deconnecter()">Se déconnecter</button>
       </div>
     </div>
   </mat-toolbar-row>

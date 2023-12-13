@@ -3,7 +3,7 @@
   <h1>Fil d'actualité</h1>
   <br>
   <h2>
-    <button mat-raised-button color="warn" *ngIf="this.authService.isConnected()" [routerLink]="['./',this.authService.currentUser!.id]">Voir ses posts</button>
+    <button mat-raised-button color="warn" *ngIf="this.authService.isConnectedV3()" [routerLink]="['./',this.authService.currentUser!.id]">Voir ses posts</button>
   </h2>
   <div>
     <mat-card class="example-card">
